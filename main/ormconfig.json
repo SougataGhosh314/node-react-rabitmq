@@ -1,0 +1,13 @@
+{
+  "type": "mongodb",
+  "host": "localhost",
+  "database": "node_react_rabitmq_main_db",
+  "entities": [
+    "src/entity/*.js"
+  ],
+  "cli": {
+    "entitiesDir": "src/entity"
+  },
+  "logging": false,
+  "synchronize": true
+}
