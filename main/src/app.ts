@@ -45,7 +45,7 @@ createConnection().then(db=>{
                 const product = await productRepository.findOne(
                     {where: {admin_id: parseInt(eventProduct.id)}}
                 )
-                await productRepository.merge(product, {
+                productRepository.merge(product, {
                     title: eventProduct.title,
                     image: eventProduct.image,
                     likes: eventProduct.likes
@@ -62,7 +62,7 @@ createConnection().then(db=>{
             }, {noAck: true})
 
             // @ts-ignore
-            app.get("/api/products", async (req: Request, res:Response) => {
+            app.get("/api/products", async (_req: Request, res:Response) => {
                 const products = await productRepository.find()
                 res.send(products)
             })

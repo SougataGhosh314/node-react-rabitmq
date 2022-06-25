@@ -26,7 +26,7 @@ createConnection().then(db=>{
 
             app.use(express.json())
 
-            app.get("/api/products", async (req: Request, res:Response) => {
+            app.get("/api/products", async (_req: Request, res:Response) => {
                 const products = await productRepository.find()
                 res.json(products)
             })
