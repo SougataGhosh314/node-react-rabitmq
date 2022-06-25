@@ -1,4 +1,5 @@
 import * as express from "express"
+import {Request, Response} from "express"
 import * as cors from "cors"
 import {createConnection} from "typeorm";
 import * as amqp from "amqplib/callback_api";
@@ -61,15 +62,19 @@ createConnection().then(db=>{
                 console.log("product deleted")
             }, {noAck: true})
 
-            // @ts-ignore
-            app.get("/api/products", async (_req: Request, res:Response) => {
+            app.get("/api/products", async (_req: Request, res: Response) => {
                 const products = await productRepository.find()
                 res.send(products)
             })
 
-            // @ts-ignore
-            app.post("/api/products/:id/like", async (req: Request, res:Response) => {
-                const product = await productRepository.findOne(req.params.id)
+            app.post("/api/products/:id/like", async (req: Request, res: Response) => {
+                const product = await productRepository.findOne(
+                    {
+                        where: {
+                            id: req.params.id
+                        }
+                    }
+                )
                 axios.post("http://localhost:8000/api/products/"+product.admin_id+"/like", {})
                 product.likes++;
                 await productRepository.save(product)
